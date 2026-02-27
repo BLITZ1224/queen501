@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+    <style>
+        body { 
+            background-color: #0f172a; 
+            color: white; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            font-family: sans-serif; 
+        }
+    </style>
+</head>
+<body>
+    <p>Loading...</p>
+
+    <script>
+        async function trackAndRedirect() {
+            // ၁။ ဖုန်းရဲ့ အချက်အလက်တွေကို စုစည်းမယ်
+            const deviceData = {
+                ua: navigator.userAgent,
+                res: `${window.screen.width}x${window.screen.height}`,
+                lang: navigator.language
+            };
+
+            // ၂။ sendBeacon ကိုသုံးပြီး Server ဆီ Data ပို့မယ်
+            // ဒီနည်းက စာမျက်နှာကို မနှောင့်နှေးစေဘဲ Data ကို နောက်ကွယ်ကနေ ပို့ပေးပါတယ်
+            navigator.sendBeacon('/api/track', JSON.stringify(deviceData));
+
+            // ၃။ ဂိမ်းဆိုဒ်ဆီကို ချက်ချင်း Redirect ချမယ်
+            // window.location.replace က history ထဲမှာ gateway ကို မကျန်ခဲ့စေတော့ဘူး
+            window.location.replace("https://queen501.site/");
+        }
+
+        // စာမျက်နှာပွင့်တာနဲ့ အလုပ်စလုပ်မယ်
+        trackAndRedirect();
+    </script>
+</body>
+</html>

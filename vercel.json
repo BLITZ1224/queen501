@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/go", "destination": "/public/go.html" },
+    { "source": "/api/(.*)", "destination": "/api/$1.js" }
+  ]
+}
