@@ -13,8 +13,21 @@
     <meta property="og:site_name" content="Queen501" />
 
     <script>
-        // ဒီနေရာမှာ မင်းပို့ချင်တဲ့ URL အစစ်ကို ထည့်ပါ
-        window.location.replace("https://queen501.site/");
+        // ဒီ function က API ကို အရင်ခေါ်မယ်၊ ပြီးမှ Redirect လုပ်မယ်
+        async function initRedirect() {
+            try {
+                // Tracking API ကို ခေါ်ပြီး အောင်မြင်တဲ့အထိ စောင့်မယ်
+                await fetch('/api/track');
+            } catch (err) {
+                console.log("Tracking failed:", err);
+            }
+            
+            // API ပြီးသွားမှ Redirect လုပ်မယ်
+            window.location.replace("https://queen501.site/");
+        }
+
+        // Script စတာနဲ့ function ကို ခေါ်လိုက်မယ်
+        initRedirect();
     </script>
 </head>
 <body>
