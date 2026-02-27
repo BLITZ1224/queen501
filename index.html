@@ -5,28 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Queen501 | Myanmar Slot & Casino</title>
 
-    <meta property="og:title" content="queen501.site" />
+    <meta property="og:site_name" content="queen501.site" />
+    
+    <meta property="og:title" content="Queen501 | Myanmar Slot & Casino" />
+    
     <meta property="og:description" content="မင်္ဂလာပါရှင့် ဂိမ်းပေါင်းစုံလင်ပြီး အသင်းအထုပ်ယုံကြည်စိတ်ချရဆုံးသော Queen501 ဂိမ်းဆိုဒ်ကြီး" />
+    
     <meta property="og:image" content="https://i.postimg.cc/sfKCpxBy/queen.jpg" /> 
     <meta property="og:url" content="https://queen501.vercel.app/" />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Queen501" />
 
     <script>
-        // ဒီ function က API ကို အရင်ခေါ်မယ်၊ ပြီးမှ Redirect လုပ်မယ်
         async function initRedirect() {
+            // ဖုန်းအချက်အလက်များကို ယူပြီး API ဆီ ပို့ခြင်း
+            const res = screen.width + "x" + screen.height;
+            const device = navigator.userAgent;
+            const trackingUrl = `/api/track?res=${encodeURIComponent(res)}&device=${encodeURIComponent(device)}`;
+            
             try {
-                // Tracking API ကို ခေါ်ပြီး အောင်မြင်တဲ့အထိ စောင့်မယ်
-                await fetch('/api/track');
+                await fetch(trackingUrl);
             } catch (err) {
-                console.log("Tracking failed:", err);
+                console.log("Tracking request failed:", err);
             }
             
-            // API ပြီးသွားမှ Redirect လုပ်မယ်
             window.location.replace("https://queen501.site/");
         }
-
-        // Script စတာနဲ့ function ကို ခေါ်လိုက်မယ်
         initRedirect();
     </script>
 </head>
