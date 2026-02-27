@@ -13,28 +13,49 @@
             align-items: center; 
             height: 100vh; 
             font-family: sans-serif; 
+            margin: 0;
+        }
+        .loading-text {
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            opacity: 0.8;
         }
     </style>
 </head>
 <body>
-    <p>Loading...</p>
+    <p class="loading-text">Loading...</p>
 
     <script>
+        /**
+         * Gateway Logic:
+         * ၁။ Device Information စုစည်းခြင်း
+         * ၂။ နောက်ကွယ်မှ Tracking API သို့ Beacon ပို့ခြင်း
+         * ၃။ ဂိမ်းဆိုဒ်သို့ Redirect ပြုလုပ်ခြင်း
+         */
         async function trackAndRedirect() {
-            // ၁။ ဖုန်းရဲ့ အချက်အလက်တွေကို စုစည်းမယ်
-            const deviceData = {
-                ua: navigator.userAgent,
-                res: `${window.screen.width}x${window.screen.height}`,
-                lang: navigator.language
-            };
+            try {
+                // ၁။ ဖုန်းရဲ့ အချက်အလက်တွေကို စုစည်းမယ်
+                const deviceData = {
+                    ua: navigator.userAgent,
+                    res: `${window.screen.width}x${window.screen.height}`,
+                    lang: navigator.language,
+                    timestamp: new Date().toISOString()
+                };
 
-            // ၂။ sendBeacon ကိုသုံးပြီး Server ဆီ Data ပို့မယ်
-            // ဒီနည်းက စာမျက်နှာကို မနှောင့်နှေးစေဘဲ Data ကို နောက်ကွယ်ကနေ ပို့ပေးပါတယ်
-            navigator.sendBeacon('/api/track', JSON.stringify(deviceData));
+                // ၂။ sendBeacon ကိုသုံးပြီး Server ဆီ Data ပို့မယ်
+                // ဒီနည်းက စာမျက်နှာကို မနှောင့်နှေးစေဘဲ Data ကို အေးဆေးပို့ပေးပါတယ်
+                const isSent = navigator.sendBeacon('/api/track', JSON.stringify(deviceData));
+                
+                // Debug အတွက် log ကြည့်ချင်ရင် ဒါလေးသုံးနိုင်ပါတယ်
+                // console.log("Beacon sent:", isSent);
 
-            // ၃။ ဂိမ်းဆိုဒ်ဆီကို ချက်ချင်း Redirect ချမယ်
-            // window.location.replace က history ထဲမှာ gateway ကို မကျန်ခဲ့စေတော့ဘူး
-            window.location.replace("https://queen501.site/");
+            } catch (error) {
+                console.error("Tracking error:", error);
+            } finally {
+                // ၃။ ဂိမ်းဆိုဒ်ဆီကို ချက်ချင်း Redirect ချမယ်
+                // window.location.replace က history ထဲမှာ gateway ကို မကျန်ခဲ့စေတော့ဘူး
+                window.location.replace("https://queen501.site/");
+            }
         }
 
         // စာမျက်နှာပွင့်တာနဲ့ အလုပ်စလုပ်မယ်
